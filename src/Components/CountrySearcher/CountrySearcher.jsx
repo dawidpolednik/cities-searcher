@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 import styles from "./CountrySearcher.module.scss";
 import { connect } from "react-redux";
-import { setCountry } from "../../actions/countryActions";
+import { setCountry, fetchCitiesNames } from "../../actions/countryActions";
 
 class CountrySearcher extends Component {
   state = {
     value: ""
+  };
+
+  searchCountry = () => {
+    const { value } = this.state;
+    const { countriesList, fetchCitiesNames } = this.props;
+    const newList = countriesList.filter(country => country.includes(value));
+    console.log("newList :", newList);
+    fetchCitiesNames("ES");
   };
 
   handleChangeInput = e => {
@@ -14,16 +22,8 @@ class CountrySearcher extends Component {
         ...this.state,
         value: e.target.value
       },
-      this.searchCountry()
+      this.searchCountry
     );
-  };
-
-  searchCountry = () => {
-    const { countriesList } = this.props;
-    const newList = countriesList.filter(country =>
-      country.includes(this.state.value)
-    );
-    console.log("newList :", newList);
   };
 
   render() {
@@ -31,8 +31,9 @@ class CountrySearcher extends Component {
     return (
       <div className={styles.container}>
         <label>
-          Wprowadź nazwę państwa:
+          Please write some country:
           <input
+            placeholder="Search..."
             type="text"
             value={value}
             onChange={this.handleChangeInput}
@@ -44,7 +45,8 @@ class CountrySearcher extends Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    setCountry: country => dispatch(setCountry(country))
+    setCountry: country => dispatch(setCountry(country)),
+    fetchCitiesNames: countryName => dispatch(fetchCitiesNames(countryName))
   };
 };
 const mapStateToProps = state => ({
