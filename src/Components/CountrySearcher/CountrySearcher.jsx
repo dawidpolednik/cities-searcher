@@ -37,12 +37,18 @@ class CountrySearcher extends Component {
 
   searchCountry = () => {
     const { value } = this.state;
-    if (this.isCountryIncludes(value)) {
-      const { fetchCitiesNames } = this.props;
+    const { setCountry } = this.props;
+    if (this.isCountryIncludes(value).length > 0) {
+      const { fetchCitiesNames, countriesList } = this.props;
       const newList = this.isCountryIncludes(value);
       const name = this.convertToTwoLetters(newList[0].toLowerCase());
 
-      fetchCitiesNames(name);
+      for (const country of countriesList) {
+        if (country.toLowerCase() === value.toLowerCase()) {
+          setCountry(country);
+          fetchCitiesNames(name);
+        }
+      }
     } else alert("wpisz poprawne panstwo");
   };
 
