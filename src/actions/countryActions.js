@@ -1,4 +1,5 @@
 export const SET_COUNTRY = "SET_COUNTRY";
+export const SET_CITIES_LIST = "SET_CITIES_LIST";
 
 const _ = require("lodash");
 
@@ -21,10 +22,17 @@ export const fetchCitiesNames = countryName => {
         const extractedList = extractFirstTenCitiesNames(
           withoutDuplicatesCities
         );
-        return extractedList;
+        dispatch(setCitiesList(extractedList));
       });
   };
 };
+
+export const setCitiesList = citiesList => ({
+  type: SET_CITIES_LIST,
+  payload: {
+    citiesList
+  }
+});
 
 export const setCountry = country => ({
   type: SET_COUNTRY,

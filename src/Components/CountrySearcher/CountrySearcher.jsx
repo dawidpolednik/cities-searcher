@@ -8,19 +8,49 @@ class CountrySearcher extends Component {
     value: ""
   };
 
+  componentDidUpdate() {
+    console.log("this.props.citiesList :", this.props.citiesList);
+  }
+
+  convertToTwoLetters = value => {
+    const { countriesList } = this.props;
+
+    let newName;
+    if (value === countriesList[0].toLowerCase()) {
+      newName = "PL";
+    } else if (value === countriesList[1].toLowerCase()) {
+      newName = "DE";
+    } else if (value === countriesList[2].toLowerCase()) {
+      newName = "ES";
+    } else if (value === countriesList[3].toLowerCase()) {
+      newName = "FR";
+    }
+    return newName;
+  };
+
+  isCountryIncludes = value => {
+    const { countriesList } = this.props;
+    return countriesList.filter(country =>
+      country.toLowerCase().startsWith(value)
+    );
+  };
+
   searchCountry = () => {
     const { value } = this.state;
-    const { countriesList, fetchCitiesNames } = this.props;
-    const newList = countriesList.filter(country => country.includes(value));
-    console.log("newList :", newList);
-    fetchCitiesNames("ES");
+    if (this.isCountryIncludes(value)) {
+      const { fetchCitiesNames } = this.props;
+      const newList = this.isCountryIncludes(value);
+      const name = this.convertToTwoLetters(newList[0].toLowerCase());
+
+      fetchCitiesNames(name);
+    } else alert("wpisz poprawne panstwo");
   };
 
   handleChangeInput = e => {
     this.setState(
       {
         ...this.state,
-        value: e.target.value
+        value: e.target.value.toLowerCase()
       },
       this.searchCountry
     );
@@ -50,6 +80,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 const mapStateToProps = state => ({
+  citiesList: state.citiesList,
   country: state.country,
   countriesList: state.countriesList
 });

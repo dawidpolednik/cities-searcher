@@ -1,10 +1,10 @@
-import { SET_COUNTRY } from "../actions/countryActions";
+import { SET_COUNTRY, SET_CITIES_LIST } from "../actions/countryActions";
 
 const reducer = (
   state = {
     country: "",
     countriesList: ["Poland", "Germany", "Spain", "France"],
-    cities: []
+    citiesList: []
   },
   action
 ) => {
@@ -13,6 +13,11 @@ const reducer = (
       return {
         ...state,
         country: action.payload.country
+      };
+    case SET_CITIES_LIST:
+      return {
+        ...state,
+        citiesList: action.payload.citiesList
       };
 
     default:
