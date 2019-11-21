@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styles from "./CountrySearcher.module.scss";
 import { connect } from "react-redux";
 import { setCountry, fetchCitiesNames } from "../../actions/countryActions";
-import AutoCompleteList from "../AutoCompleteList/AutoCompleteList";
 
 class CountrySearcher extends Component {
   state = {
@@ -36,20 +35,23 @@ class CountrySearcher extends Component {
     );
   };
 
+  fetchData = () => {
+    const { value } = this.state;
+    const { setCountry, fetchCitiesNames, countriesList } = this.props;
+    const newList = this.checkCountryContains(value);
+    const name = this.convertToTwoLetters(newList[0].toLowerCase());
+    for (const country of countriesList) {
+      if (country.toLowerCase() === value.toLowerCase()) {
+        fetchCitiesNames(name);
+        setCountry(country);
+      }
+    }
+  };
+
   searchCountry = () => {
     const { value } = this.state;
-    const { setCountry } = this.props;
     if (this.checkCountryContains(value).length > 0) {
-      const { fetchCitiesNames, countriesList } = this.props;
-      const newList = this.checkCountryContains(value);
-      const name = this.convertToTwoLetters(newList[0].toLowerCase());
-
-      for (const country of countriesList) {
-        if (country.toLowerCase() === value.toLowerCase()) {
-          fetchCitiesNames(name);
-          setCountry(country);
-        }
-      }
+      this.fetchData();
     } else alert("wpisz poprawne panstwo");
   };
 
@@ -63,10 +65,48 @@ class CountrySearcher extends Component {
     );
   };
 
+  handleAutoCompleteValue = () => {
+    const { value } = this.state;
+    this.setState(
+      {
+        ...this.state,
+        value: this.checkCountryContains(value)[0].toLowerCase()
+      },
+      this.fetchData
+    );
+  };
+
+  get isRenderAutoComplete() {
+    const { value } = this.state;
+    return this.checkCountryContains(value)[0].toLowerCase() !== value;
+  }
+
+  renderAutoCompleteItem = () => {
+    const { value } = this.state;
+    return (
+      this.isRenderAutoComplete && (
+        <li onClick={this.handleAutoCompleteValue}>
+          {this.checkCountryContains(value)}
+        </li>
+      )
+    );
+  };
+
+  renderAutoCompleteList = () => (
+    <div className={styles.autoCompleteContainer}>
+      <ul>{this.renderAutoCompleteItem()}</ul>
+    </div>
+  );
+
+  renderAutoCompleteSection = () => {
+    const { value } = this.state;
+    return this.checkCountryContains(value).length > 0
+      ? this.renderAutoCompleteList()
+      : null;
+  };
+
   render() {
     const { value } = this.state;
-    const { countriesList } = this.props;
-    console.log("value :", value);
     return (
       <div className={styles.container}>
         <label>
@@ -78,13 +118,7 @@ class CountrySearcher extends Component {
             onChange={this.handleChangeInput}
           ></input>
         </label>
-        {value && value.length > 0 && (
-          <AutoCompleteList
-            countriesList={countriesList}
-            value={value}
-            checkCountryContains={this.checkCountryContains}
-          />
-        )}
+        {value && value.length > 0 && this.renderAutoCompleteSection()}
       </div>
     );
   }
