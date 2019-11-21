@@ -10,6 +10,7 @@ class App extends Component {
     return (
       <div className={styles.App}>
         <CountrySearcher />
+
         {country && citiesList && citiesList.length > 0 && (
           <CitiesList citiesList={citiesList} country={country} />
         )}

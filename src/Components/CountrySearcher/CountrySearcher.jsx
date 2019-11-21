@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styles from "./CountrySearcher.module.scss";
 import { connect } from "react-redux";
 import { setCountry, fetchCitiesNames } from "../../actions/countryActions";
+import AutoCompleteList from "../AutoCompleteList/AutoCompleteList";
 
 class CountrySearcher extends Component {
   state = {
@@ -28,25 +29,25 @@ class CountrySearcher extends Component {
     return newName;
   };
 
-  isCountryIncludes = value => {
+  checkCountryContains = value => {
     const { countriesList } = this.props;
-    return countriesList.filter(country =>
-      country.toLowerCase().startsWith(value)
+    return countriesList.filter(countryName =>
+      countryName.toLowerCase().startsWith(value)
     );
   };
 
   searchCountry = () => {
     const { value } = this.state;
     const { setCountry } = this.props;
-    if (this.isCountryIncludes(value).length > 0) {
+    if (this.checkCountryContains(value).length > 0) {
       const { fetchCitiesNames, countriesList } = this.props;
-      const newList = this.isCountryIncludes(value);
+      const newList = this.checkCountryContains(value);
       const name = this.convertToTwoLetters(newList[0].toLowerCase());
 
       for (const country of countriesList) {
         if (country.toLowerCase() === value.toLowerCase()) {
-          setCountry(country);
           fetchCitiesNames(name);
+          setCountry(country);
         }
       }
     } else alert("wpisz poprawne panstwo");
@@ -64,6 +65,8 @@ class CountrySearcher extends Component {
 
   render() {
     const { value } = this.state;
+    const { countriesList } = this.props;
+    console.log("value :", value);
     return (
       <div className={styles.container}>
         <label>
@@ -75,6 +78,13 @@ class CountrySearcher extends Component {
             onChange={this.handleChangeInput}
           ></input>
         </label>
+        {value && value.length > 0 && (
+          <AutoCompleteList
+            countriesList={countriesList}
+            value={value}
+            checkCountryContains={this.checkCountryContains}
+          />
+        )}
       </div>
     );
   }
