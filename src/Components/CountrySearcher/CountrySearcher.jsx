@@ -2,11 +2,17 @@ import React, { Component } from "react";
 import styles from "./CountrySearcher.module.scss";
 import { connect } from "react-redux";
 import { setCountry, fetchCitiesNames } from "../../actions/countryActions";
+import { fetchCityFromApi } from "../../actions/citiesActions";
 
 class CountrySearcher extends Component {
   state = {
     value: ""
   };
+
+  componentDidMount() {
+    const { fetchCityFromApi } = this.props;
+    fetchCityFromApi("Kędzierzyn-Koźle");
+  }
 
   componentDidUpdate() {
     console.log("this.props.citiesList :", this.props.citiesList);
@@ -126,12 +132,14 @@ class CountrySearcher extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     setCountry: country => dispatch(setCountry(country)),
-    fetchCitiesNames: countryName => dispatch(fetchCitiesNames(countryName))
+    fetchCitiesNames: countryName => dispatch(fetchCitiesNames(countryName)),
+    fetchCityFromApi: cityName => dispatch(fetchCityFromApi(cityName))
   };
 };
 const mapStateToProps = state => ({
   citiesList: state.citiesList,
   country: state.country,
-  countriesList: state.countriesList
+  countriesList: state.countriesList,
+  city: state.city
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CountrySearcher);
