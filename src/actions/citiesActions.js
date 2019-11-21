@@ -4,7 +4,7 @@ const getCityTitle = data => Object.values(data)[0].title;
 
 const getCityDescription = data => Object.values(data)[0].extract;
 
-const getCityThumbnail = data => Object.values(data)[0].thumbnail.source;
+// const getCityThumbnail = data => Object.values(data)[0].thumbnail.source;
 
 export const fetchCityFromApi = cityName => {
   return dispatch => {
@@ -15,12 +15,12 @@ export const fetchCityFromApi = cityName => {
       }
     )
       .then(r => r.json())
-      .then(r => {
-        const data = r.query.pages;
+      .then(resp => {
+        const data = resp.query.pages;
         const title = getCityTitle(data);
         const description = getCityDescription(data);
-        const photo = getCityThumbnail(data);
-        dispatch(setCityProperties([title, description, photo]));
+        // const photo = getCityThumbnail(data);
+        dispatch(setCityProperties([title, description]));
       });
   };
 };
