@@ -3,20 +3,19 @@ import styles from "./CountrySearcher.module.scss";
 import { connect } from "react-redux";
 import { setCountry, fetchCitiesNames } from "../../actions/countryActions";
 import { fetchCityFromApi } from "../../actions/citiesActions";
+import DialogAlert from "../DialogAlert/DialogAlert";
 
 class CountrySearcher extends Component {
   state = {
-    value: ""
+    value: "",
+    isOpenAlert: false
   };
 
-  componentDidMount() {
-    const { fetchCityFromApi } = this.props;
-    fetchCityFromApi("Kędzierzyn-Koźle");
-  }
-
-  componentDidUpdate() {
-    console.log("this.props.citiesList :", this.props.citiesList);
-  }
+  handleAlert = () =>
+    this.setState(prevState => ({
+      ...this.state,
+      isOpenAlert: !prevState.isOpenAlert
+    }));
 
   convertToTwoLetters = value => {
     const { countriesList } = this.props;
@@ -58,7 +57,7 @@ class CountrySearcher extends Component {
     const { value } = this.state;
     if (this.checkCountryContains(value).length > 0) {
       this.fetchData();
-    } else alert("wpisz poprawne panstwo");
+    } else this.handleAlert();
   };
 
   handleChangeInput = e => {
@@ -112,7 +111,8 @@ class CountrySearcher extends Component {
   };
 
   render() {
-    const { value } = this.state;
+    const { value, isOpenAlert } = this.state;
+    const { countriesList } = this.props;
     return (
       <div className={styles.container}>
         <label>
@@ -125,6 +125,11 @@ class CountrySearcher extends Component {
           ></input>
         </label>
         {value && value.length > 0 && this.renderAutoCompleteSection()}
+        <DialogAlert
+          isOpenAlert={isOpenAlert}
+          handleAlert={this.handleAlert}
+          countriesList={countriesList}
+        />
       </div>
     );
   }

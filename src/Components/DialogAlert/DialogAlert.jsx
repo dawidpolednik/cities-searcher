@@ -7,17 +7,12 @@ import {
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
-import style from "./DialogCityInfo.styles";
+import style from "./DialogAlert.styles.js";
 
-const DialogCityInfo = ({
-  classes,
-  isOpenDialog,
-  handleDialog,
-  cityProperties
-}) => {
+const DialogAlert = ({ classes, isOpenAlert, handleAlert, countriesList }) => {
   const dialogTitle = (
     <DialogTitle className={classes.dialogTitle} id="alert-dialog-title">
-      {cityProperties[0]}
+      Something goes wrong
     </DialogTitle>
   );
 
@@ -26,13 +21,14 @@ const DialogCityInfo = ({
       className={classes.dialogContent}
       id="alert-dialog-description"
     >
-      {cityProperties[1]}
+      The value entered is not valid. This value must include one of the
+      following countries: {countriesList.join(", ")}
     </DialogContentText>
   );
 
   const dialogActions = (
     <DialogActions>
-      <Button onClick={handleDialog} color="primary">
+      <Button onClick={handleAlert} color="primary">
         Back
       </Button>
     </DialogActions>
@@ -40,8 +36,8 @@ const DialogCityInfo = ({
 
   return (
     <Dialog
-      open={isOpenDialog}
-      onClose={handleDialog}
+      open={isOpenAlert}
+      onClose={handleAlert}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -51,4 +47,4 @@ const DialogCityInfo = ({
     </Dialog>
   );
 };
-export default withStyles(style)(DialogCityInfo);
+export default withStyles(style)(DialogAlert);
