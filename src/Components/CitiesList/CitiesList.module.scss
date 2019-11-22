@@ -1,0 +1,15 @@
+@import "../../assets/fonts.scss";
+
+.listTitle {
+  font-size: 1.4rem;
+  color: #eee;
+  font-family: $firstFont;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+}
+
+.citiesList {
+  width: 70%;
+  list-style-type: none;
+}

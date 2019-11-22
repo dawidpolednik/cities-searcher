@@ -22,10 +22,13 @@ class CityItem extends Component {
     const { name, cityProperties } = this.props;
     return (
       <>
-        <li>
-          <div className={styles.CityItemContainer}>
-            <p>{name}</p>
-            <button onClick={this.renderCityData}>
+        <li className={styles.cityItem}>
+          <div className={styles.cityItemContainer}>
+            <p className={styles.cityItemName}>{name}</p>
+            <button
+              className={styles.cityItemButton}
+              onClick={this.renderCityData}
+            >
               Display city informations
             </button>
           </div>
