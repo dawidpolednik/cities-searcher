@@ -11,11 +11,26 @@ class CountrySearcher extends Component {
     isOpenAlert: false
   };
 
+  // componentDidMount() {
+  //   const { fetchCityFromApi } = this.props;
+  //   fetchCityFromApi("Kędzierzyn-Koźle");
+  // }
+
+  resetInputValue = () =>
+    this.setState({
+      ...this.state,
+      value: ""
+    });
+
   handleAlert = () =>
     this.setState(prevState => ({
-      ...this.state,
       isOpenAlert: !prevState.isOpenAlert
     }));
+
+  renderDialogAlert = () => {
+    this.resetInputValue();
+    this.handleAlert();
+  };
 
   convertToTwoLetters = value => {
     const { countriesList } = this.props;
@@ -57,7 +72,7 @@ class CountrySearcher extends Component {
     const { value } = this.state;
     if (this.checkCountryContains(value).length > 0) {
       this.fetchData();
-    } else this.handleAlert();
+    } else this.renderDialogAlert();
   };
 
   handleChangeInput = e => {

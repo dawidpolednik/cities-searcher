@@ -13,8 +13,7 @@ class CityItem extends Component {
     this.setState(prevState => ({ isOpenDialog: !prevState.isOpenDialog }));
 
   renderCityData = async () => {
-    const { cityProperties, name, fetchCityFromApi } = this.props;
-    console.log("name :", name);
+    const { name, fetchCityFromApi } = this.props;
     await fetchCityFromApi(name);
     this.handleDialog();
   };
@@ -31,11 +30,13 @@ class CityItem extends Component {
             </button>
           </div>
         </li>
-        <DialogCityInfo
-          isOpenDialog={this.state.isOpenDialog}
-          handleDialog={this.handleDialog}
-          cityProperties={cityProperties}
-        />
+        {cityProperties && cityProperties.length > 0 && (
+          <DialogCityInfo
+            isOpenDialog={this.state.isOpenDialog}
+            handleDialog={this.handleDialog}
+            cityProperties={cityProperties}
+          />
+        )}
       </>
     );
   }

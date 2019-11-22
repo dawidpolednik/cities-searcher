@@ -24,6 +24,7 @@ export const fetchCitiesNames = countryName => {
       .then(r => r.json())
       .then(({ results }) => {
         const withoutDuplicatesCities = removeDuplicatesObjects(results);
+
         const extractedList = extractFirstTenCitiesNames(
           withoutDuplicatesCities
         );
