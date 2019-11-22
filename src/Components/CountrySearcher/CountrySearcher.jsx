@@ -99,24 +99,23 @@ class CountrySearcher extends Component {
   renderAutoCompleteItem = () => {
     const { value } = this.state;
     return (
-      this.isRenderAutoComplete && (
-        <li
-          onClick={this.handleAutoCompleteValue}
-          className={styles.autoCompleteItem}
-        >
-          {this.checkCountryContains(value)}
-        </li>
-      )
+      <li
+        onClick={this.handleAutoCompleteValue}
+        className={styles.autoCompleteItem}
+      >
+        {this.checkCountryContains(value)}
+      </li>
     );
   };
 
-  renderAutoCompleteList = () => (
-    <div className={styles.autoCompleteContainer}>
-      <ul className={styles.autoCompleteList}>
-        {this.renderAutoCompleteItem()}
-      </ul>
-    </div>
-  );
+  renderAutoCompleteList = () =>
+    this.isRenderAutoComplete && (
+      <div className={styles.autoCompleteContainer}>
+        <ul className={styles.autoCompleteList}>
+          {this.renderAutoCompleteItem()}
+        </ul>
+      </div>
+    );
 
   renderAutoCompleteSection = () => {
     const { value } = this.state;
