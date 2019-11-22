@@ -1,5 +1,5 @@
 .cityItem {
-  width: 100%;
+  width: 70%;
   padding: 15px 0;
   display: flex;
   justify-content: center;
@@ -8,9 +8,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 70%;
+    width: 90%;
     height: 70px;
     line-height: 70px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.7);
+
+    .cityItemName {
+      text-align: center;
+    }
   }
 }
