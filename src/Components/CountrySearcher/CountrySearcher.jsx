@@ -2,15 +2,20 @@ import React, { Component } from "react";
 import styles from "./CountrySearcher.module.scss";
 import { connect } from "react-redux";
 import { setCountry, fetchCitiesNames } from "../../actions/countryActions";
+import { fetchCityFromApi } from "../../actions/citiesActions";
+import DialogAlert from "../DialogAlert/DialogAlert";
 
 class CountrySearcher extends Component {
   state = {
-    value: ""
+    value: "",
+    isOpenAlert: false
   };
 
-  componentDidUpdate() {
-    console.log("this.props.citiesList :", this.props.citiesList);
-  }
+  handleAlert = () =>
+    this.setState(prevState => ({
+      ...this.state,
+      isOpenAlert: !prevState.isOpenAlert
+    }));
 
   convertToTwoLetters = value => {
     const { countriesList } = this.props;
@@ -52,7 +57,7 @@ class CountrySearcher extends Component {
     const { value } = this.state;
     if (this.checkCountryContains(value).length > 0) {
       this.fetchData();
-    } else alert("wpisz poprawne panstwo");
+    } else this.handleAlert();
   };
 
   handleChangeInput = e => {
@@ -106,7 +111,8 @@ class CountrySearcher extends Component {
   };
 
   render() {
-    const { value } = this.state;
+    const { value, isOpenAlert } = this.state;
+    const { countriesList } = this.props;
     return (
       <div className={styles.container}>
         <label>
@@ -119,6 +125,11 @@ class CountrySearcher extends Component {
           ></input>
         </label>
         {value && value.length > 0 && this.renderAutoCompleteSection()}
+        <DialogAlert
+          isOpenAlert={isOpenAlert}
+          handleAlert={this.handleAlert}
+          countriesList={countriesList}
+        />
       </div>
     );
   }
@@ -126,12 +137,14 @@ class CountrySearcher extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     setCountry: country => dispatch(setCountry(country)),
-    fetchCitiesNames: countryName => dispatch(fetchCitiesNames(countryName))
+    fetchCitiesNames: countryName => dispatch(fetchCitiesNames(countryName)),
+    fetchCityFromApi: cityName => dispatch(fetchCityFromApi(cityName))
   };
 };
 const mapStateToProps = state => ({
   citiesList: state.citiesList,
   country: state.country,
-  countriesList: state.countriesList
+  countriesList: state.countriesList,
+  city: state.city
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CountrySearcher);

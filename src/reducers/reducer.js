@@ -1,4 +1,5 @@
 import { SET_COUNTRY, SET_CITIES_LIST } from "../actions/countryActions";
+import { SET_CITY_PROPERTIES } from "../actions/citiesActions";
 
 const reducer = (
   state = {
@@ -18,6 +19,12 @@ const reducer = (
       return {
         ...state,
         citiesList: action.payload.citiesList
+      };
+
+    case SET_CITY_PROPERTIES:
+      return {
+        ...state,
+        cityProperties: action.payload.response
       };
 
     default:
