@@ -11,11 +11,6 @@ class CountrySearcher extends Component {
     isOpenAlert: false
   };
 
-  // componentDidMount() {
-  //   const { fetchCityFromApi } = this.props;
-  //   fetchCityFromApi("Kędzierzyn-Koźle");
-  // }
-
   resetInputValue = () =>
     this.setState({
       ...this.state,
@@ -105,7 +100,10 @@ class CountrySearcher extends Component {
     const { value } = this.state;
     return (
       this.isRenderAutoComplete && (
-        <li onClick={this.handleAutoCompleteValue}>
+        <li
+          onClick={this.handleAutoCompleteValue}
+          className={styles.autoCompleteItem}
+        >
           {this.checkCountryContains(value)}
         </li>
       )
@@ -114,7 +112,9 @@ class CountrySearcher extends Component {
 
   renderAutoCompleteList = () => (
     <div className={styles.autoCompleteContainer}>
-      <ul>{this.renderAutoCompleteItem()}</ul>
+      <ul className={styles.autoCompleteList}>
+        {this.renderAutoCompleteItem()}
+      </ul>
     </div>
   );
 
@@ -130,15 +130,19 @@ class CountrySearcher extends Component {
     const { countriesList } = this.props;
     return (
       <div className={styles.container}>
-        <label>
+        <label className={styles.inputTitle} form="name">
+          {" "}
           Please write some country:
-          <input
-            placeholder="Search..."
-            type="text"
-            value={value}
-            onChange={this.handleChangeInput}
-          ></input>
         </label>
+        <input
+          className={styles.input}
+          placeholder="Search..."
+          id="name"
+          type="text"
+          value={value}
+          onChange={this.handleChangeInput}
+        ></input>
+
         {value && value.length > 0 && this.renderAutoCompleteSection()}
         <DialogAlert
           isOpenAlert={isOpenAlert}
