@@ -8,6 +8,11 @@ const removeDuplicatesObjects = (...cities) => _.uniqBy(cities[0], "city");
 const extractFirstTenCitiesNames = (...cities) =>
   _.take(cities[0], 10).map(({ city }) => city);
 
+const checkMultipleNames = cityNameList =>
+  cityNameList.map(cityName =>
+    cityName.includes("/") ? cityName.split("/")[0] : cityName
+  );
+
 export const fetchCitiesNames = countryName => {
   return dispatch => {
     return fetch(
@@ -22,7 +27,8 @@ export const fetchCitiesNames = countryName => {
         const extractedList = extractFirstTenCitiesNames(
           withoutDuplicatesCities
         );
-        dispatch(setCitiesList(extractedList));
+        const dataToSet = checkMultipleNames(extractedList);
+        dispatch(setCitiesList(dataToSet));
       });
   };
 };
