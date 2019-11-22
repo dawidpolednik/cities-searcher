@@ -2,32 +2,41 @@ import React, { Component } from "react";
 import styles from "./CityItem.module.scss";
 import { connect } from "react-redux";
 import { fetchCityFromApi } from "../../actions/citiesActions";
+import DialogCityInfo from "../DialogCityInfo/DialogCityInfo";
 
 class CityItem extends Component {
-  // componentDidUpdate() {
-  //   const { name } = this.props;
-  //   console.log("name :", name);
-  //   const { fetchCityFromApi } = this.props;
-  //   fetchCityFromApi(name);
-  // }
+  state = {
+    isOpenDialog: false
+  };
 
-  renderCityData = () => {
+  handleDialog = () =>
+    this.setState(prevState => ({ isOpenDialog: !prevState.isOpenDialog }));
+
+  renderCityData = async () => {
     const { cityProperties, name, fetchCityFromApi } = this.props;
-    fetchCityFromApi(name);
-    return console.log("cityProperties :", cityProperties);
+    console.log("name :", name);
+    await fetchCityFromApi(name);
+    this.handleDialog();
   };
 
   render() {
-    const { name } = this.props;
+    const { name, cityProperties } = this.props;
     return (
-      <li>
-        <div className={styles.CityItemContainer}>
-          <p>{name}</p>
-          <button onClick={this.renderCityData}>
-            Display city informations
-          </button>
-        </div>
-      </li>
+      <>
+        <li>
+          <div className={styles.CityItemContainer}>
+            <p>{name}</p>
+            <button onClick={this.renderCityData}>
+              Display city informations
+            </button>
+          </div>
+        </li>
+        <DialogCityInfo
+          isOpenDialog={this.state.isOpenDialog}
+          handleDialog={this.handleDialog}
+          cityProperties={cityProperties}
+        />
+      </>
     );
   }
 }
