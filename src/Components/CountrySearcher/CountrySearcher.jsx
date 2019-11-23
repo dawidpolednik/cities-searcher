@@ -128,11 +128,12 @@ class CountrySearcher extends Component {
   render() {
     const { value, isOpenAlert } = this.state;
     const { countriesList } = this.props;
+
     return (
       <ScrollAnimation
         animateIn="flipInY"
         initiallyVisible={false}
-        duration={4}
+        duration={3}
         delay={100}
         animateOnce
         animatePreScroll
@@ -140,11 +141,10 @@ class CountrySearcher extends Component {
       >
         <div className={styles.container}>
           <label className={styles.inputTitle} form="name">
-            {" "}
             Please write some country:
           </label>
           <input
-            autocomplete="off"
+            autoComplete="off"
             className={styles.input}
             placeholder="Search..."
             id="name"

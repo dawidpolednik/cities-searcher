@@ -1,5 +1,6 @@
 export const SET_COUNTRY = "SET_COUNTRY";
 export const SET_CITIES_LIST = "SET_CITIES_LIST";
+export const SET_SPINNER_FLAG = "SET_SPINNER_FLAG";
 
 const _ = require("lodash");
 
@@ -15,6 +16,7 @@ const checkMultipleNames = cityNameList =>
 
 export const fetchCitiesNames = countryName => {
   return dispatch => {
+    dispatch(setSpinnerFlag(true));
     return fetch(
       `https://api.openaq.org/v1/measurements?country=${countryName}&limit=500&parameter[]=pm25&sort=desc&order_by=value`,
       {
@@ -29,10 +31,18 @@ export const fetchCitiesNames = countryName => {
           withoutDuplicatesCities
         );
         const dataToSet = checkMultipleNames(extractedList);
+        dispatch(setSpinnerFlag(false));
         dispatch(setCitiesList(dataToSet));
       });
   };
 };
+
+export const setSpinnerFlag = bool => ({
+  type: SET_SPINNER_FLAG,
+  payload: {
+    bool
+  }
+});
 
 export const setCitiesList = citiesList => ({
   type: SET_CITIES_LIST,

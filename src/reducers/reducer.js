@@ -1,11 +1,16 @@
-import { SET_COUNTRY, SET_CITIES_LIST } from "../actions/countryActions";
+import {
+  SET_COUNTRY,
+  SET_CITIES_LIST,
+  SET_SPINNER_FLAG
+} from "../actions/countryActions";
 import { SET_CITY_PROPERTIES } from "../actions/citiesActions";
 
 const reducer = (
   state = {
     country: "",
     countriesList: ["Poland", "Germany", "Spain", "France"],
-    citiesList: []
+    citiesList: [],
+    isShouldRenderSpinner: false
   },
   action
 ) => {
@@ -25,6 +30,12 @@ const reducer = (
       return {
         ...state,
         cityProperties: action.payload.response
+      };
+
+    case SET_SPINNER_FLAG:
+      return {
+        ...state,
+        isShouldRenderSpinner: action.payload.bool
       };
 
     default:
