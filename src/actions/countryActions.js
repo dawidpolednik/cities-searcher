@@ -1,3 +1,4 @@
+import { checkIncorrectNameFromApi } from "./openAqApiFix";
 export const SET_COUNTRY = "SET_COUNTRY";
 export const SET_CITIES_LIST = "SET_CITIES_LIST";
 export const SET_SPINNER_FLAG = "SET_SPINNER_FLAG";
@@ -30,9 +31,15 @@ export const fetchCitiesNames = countryName => {
         const extractedList = extractFirstTenCitiesNames(
           withoutDuplicatesCities
         );
-        const dataToSet = checkMultipleNames(extractedList);
+
+        const withoutDuplicatesNames = checkMultipleNames(extractedList);
+
+        const withoutValidNames = checkIncorrectNameFromApi(
+          withoutDuplicatesNames
+        );
+
         dispatch(setSpinnerFlag(false));
-        dispatch(setCitiesList(dataToSet));
+        dispatch(setCitiesList(withoutValidNames));
       });
   };
 };

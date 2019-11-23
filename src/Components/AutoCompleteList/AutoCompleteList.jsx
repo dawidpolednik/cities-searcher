@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./AutoCompleteList.module.scss";
 
-const AutoCompleteList = ({ countriesList, value, checkCountryContains }) => {
-  console.log("value :", value);
+const AutoCompleteList = ({ value, checkCountryContains }) => {
   return checkCountryContains(value).length > 0 ? (
     <div className={styles.autoCompleteContainer}>
       <ul>
