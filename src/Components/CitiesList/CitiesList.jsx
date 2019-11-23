@@ -10,6 +10,7 @@ class CitiesList extends Component {
         <h2
           className={styles.listTitle}
         >{`List of the 10 most polluted cities in ${country}`}</h2>
+
         <ul className={styles.citiesList}>
           {citiesList.map((city, index) => (
             <CityItem name={city} key={index} />

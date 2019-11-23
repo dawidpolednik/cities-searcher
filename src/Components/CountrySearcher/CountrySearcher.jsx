@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setCountry, fetchCitiesNames } from "../../actions/countryActions";
 import { fetchCityFromApi } from "../../actions/citiesActions";
 import DialogAlert from "../DialogAlert/DialogAlert";
+import ScrollAnimation from "react-animate-on-scroll";
 
 class CountrySearcher extends Component {
   state = {
@@ -128,27 +129,37 @@ class CountrySearcher extends Component {
     const { value, isOpenAlert } = this.state;
     const { countriesList } = this.props;
     return (
-      <div className={styles.container}>
-        <label className={styles.inputTitle} form="name">
-          {" "}
-          Please write some country:
-        </label>
-        <input
-          className={styles.input}
-          placeholder="Search..."
-          id="name"
-          type="text"
-          value={value}
-          onChange={this.handleChangeInput}
-        ></input>
+      <ScrollAnimation
+        animateIn="flipInY"
+        initiallyVisible={false}
+        duration={4}
+        delay={100}
+        animateOnce
+        animatePreScroll
+        style={{ textAlign: "center" }}
+      >
+        <div className={styles.container}>
+          <label className={styles.inputTitle} form="name">
+            {" "}
+            Please write some country:
+          </label>
+          <input
+            className={styles.input}
+            placeholder="Search..."
+            id="name"
+            type="text"
+            value={value}
+            onChange={this.handleChangeInput}
+          ></input>
 
-        {value && value.length > 0 && this.renderAutoCompleteSection()}
-        <DialogAlert
-          isOpenAlert={isOpenAlert}
-          handleAlert={this.handleAlert}
-          countriesList={countriesList}
-        />
-      </div>
+          {value && value.length > 0 && this.renderAutoCompleteSection()}
+          <DialogAlert
+            isOpenAlert={isOpenAlert}
+            handleAlert={this.handleAlert}
+            countriesList={countriesList}
+          />
+        </div>
+      </ScrollAnimation>
     );
   }
 }
