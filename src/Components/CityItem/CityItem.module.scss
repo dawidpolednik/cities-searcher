@@ -1,3 +1,4 @@
+@import "../../assets/fonts.scss";
 .cityItem {
   margin: 0;
   width: 100%;
@@ -5,22 +6,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   .cityItemContainer {
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
+    grid-template-columns: 1fr 1fr;
     width: 60%;
     height: 70px;
     line-height: 70px;
     background-color: rgba(255, 255, 255, 0.3);
     color: black;
+    border: 2px solid black;
 
     .cityItemName {
-      width: 50%;
+      width: 100%;
       text-align: center;
+      font-family: $secondFont;
+      opacity: 0.8;
+      line-height: 70px;
+      font-size: 1.2rem;
+      font-weight: bold;
     }
     .cityItemButton {
-      width: 50%;
     }
   }
 }
