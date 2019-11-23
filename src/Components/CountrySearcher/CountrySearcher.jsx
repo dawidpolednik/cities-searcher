@@ -144,6 +144,7 @@ class CountrySearcher extends Component {
             Please write some country:
           </label>
           <input
+            autocomplete="off"
             className={styles.input}
             placeholder="Search..."
             id="name"
