@@ -40,6 +40,7 @@ const DialogCityInfo = ({
 
   return (
     <Dialog
+      className={classes.dialog}
       open={isOpenDialog}
       onClose={handleDialog}
       aria-labelledby="alert-dialog-title"

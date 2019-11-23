@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setCountry, fetchCitiesNames } from "../../actions/countryActions";
 import { fetchCityFromApi } from "../../actions/citiesActions";
 import DialogAlert from "../DialogAlert/DialogAlert";
+import ScrollAnimation from "react-animate-on-scroll";
 
 class CountrySearcher extends Component {
   state = {
@@ -11,11 +12,21 @@ class CountrySearcher extends Component {
     isOpenAlert: false
   };
 
+  resetInputValue = () =>
+    this.setState({
+      ...this.state,
+      value: ""
+    });
+
   handleAlert = () =>
     this.setState(prevState => ({
-      ...this.state,
       isOpenAlert: !prevState.isOpenAlert
     }));
+
+  renderDialogAlert = () => {
+    this.resetInputValue();
+    this.handleAlert();
+  };
 
   convertToTwoLetters = value => {
     const { countriesList } = this.props;
@@ -57,7 +68,7 @@ class CountrySearcher extends Component {
     const { value } = this.state;
     if (this.checkCountryContains(value).length > 0) {
       this.fetchData();
-    } else this.handleAlert();
+    } else this.renderDialogAlert();
   };
 
   handleChangeInput = e => {
@@ -89,19 +100,23 @@ class CountrySearcher extends Component {
   renderAutoCompleteItem = () => {
     const { value } = this.state;
     return (
-      this.isRenderAutoComplete && (
-        <li onClick={this.handleAutoCompleteValue}>
-          {this.checkCountryContains(value)}
-        </li>
-      )
+      <li
+        onClick={this.handleAutoCompleteValue}
+        className={styles.autoCompleteItem}
+      >
+        {this.checkCountryContains(value)}
+      </li>
     );
   };
 
-  renderAutoCompleteList = () => (
-    <div className={styles.autoCompleteContainer}>
-      <ul>{this.renderAutoCompleteItem()}</ul>
-    </div>
-  );
+  renderAutoCompleteList = () =>
+    this.isRenderAutoComplete && (
+      <div className={styles.autoCompleteContainer}>
+        <ul className={styles.autoCompleteList}>
+          {this.renderAutoCompleteItem()}
+        </ul>
+      </div>
+    );
 
   renderAutoCompleteSection = () => {
     const { value } = this.state;
@@ -114,23 +129,38 @@ class CountrySearcher extends Component {
     const { value, isOpenAlert } = this.state;
     const { countriesList } = this.props;
     return (
-      <div className={styles.container}>
-        <label>
-          Please write some country:
+      <ScrollAnimation
+        animateIn="flipInY"
+        initiallyVisible={false}
+        duration={4}
+        delay={100}
+        animateOnce
+        animatePreScroll
+        style={{ textAlign: "center" }}
+      >
+        <div className={styles.container}>
+          <label className={styles.inputTitle} form="name">
+            {" "}
+            Please write some country:
+          </label>
           <input
+            autocomplete="off"
+            className={styles.input}
             placeholder="Search..."
+            id="name"
             type="text"
             value={value}
             onChange={this.handleChangeInput}
           ></input>
-        </label>
-        {value && value.length > 0 && this.renderAutoCompleteSection()}
-        <DialogAlert
-          isOpenAlert={isOpenAlert}
-          handleAlert={this.handleAlert}
-          countriesList={countriesList}
-        />
-      </div>
+
+          {value && value.length > 0 && this.renderAutoCompleteSection()}
+          <DialogAlert
+            isOpenAlert={isOpenAlert}
+            handleAlert={this.handleAlert}
+            countriesList={countriesList}
+          />
+        </div>
+      </ScrollAnimation>
     );
   }
 }

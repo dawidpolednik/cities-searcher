@@ -13,8 +13,7 @@ class CityItem extends Component {
     this.setState(prevState => ({ isOpenDialog: !prevState.isOpenDialog }));
 
   renderCityData = async () => {
-    const { cityProperties, name, fetchCityFromApi } = this.props;
-    console.log("name :", name);
+    const { name, fetchCityFromApi } = this.props;
     await fetchCityFromApi(name);
     this.handleDialog();
   };
@@ -23,19 +22,24 @@ class CityItem extends Component {
     const { name, cityProperties } = this.props;
     return (
       <>
-        <li>
-          <div className={styles.CityItemContainer}>
-            <p>{name}</p>
-            <button onClick={this.renderCityData}>
+        <li className={styles.cityItem}>
+          <div className={styles.cityItemContainer}>
+            <p className={styles.cityItemName}>{name}</p>
+            <button
+              className={styles.cityItemButton}
+              onClick={this.renderCityData}
+            >
               Display city informations
             </button>
           </div>
         </li>
-        <DialogCityInfo
-          isOpenDialog={this.state.isOpenDialog}
-          handleDialog={this.handleDialog}
-          cityProperties={cityProperties}
-        />
+        {cityProperties && cityProperties.length > 0 && (
+          <DialogCityInfo
+            isOpenDialog={this.state.isOpenDialog}
+            handleDialog={this.handleDialog}
+            cityProperties={cityProperties}
+          />
+        )}
       </>
     );
   }
