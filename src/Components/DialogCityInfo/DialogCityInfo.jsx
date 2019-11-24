@@ -50,7 +50,6 @@ const DialogCityInfo = ({
       PaperProps={{
         style: {
           margin: "auto",
-          // marginTop: "10px",
           width: "70%",
           minHeight: "20vh",
           maxHeight: "90vh"

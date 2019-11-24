@@ -18,21 +18,28 @@ class CityItem extends Component {
     this.handleDialog();
   };
 
+  renderCityItem = () => {
+    const { name } = this.props;
+    return (
+      <li className={styles.cityItem}>
+        <div className={styles.cityItemContainer}>
+          <p className={styles.cityItemName}>{name}</p>
+          <button
+            className={styles.cityItemButton}
+            onClick={this.renderCityData}
+          >
+            Display city informations
+          </button>
+        </div>
+      </li>
+    );
+  };
+
   render() {
-    const { name, cityProperties } = this.props;
+    const { cityProperties } = this.props;
     return (
       <>
-        <li className={styles.cityItem}>
-          <div className={styles.cityItemContainer}>
-            <p className={styles.cityItemName}>{name}</p>
-            <button
-              className={styles.cityItemButton}
-              onClick={this.renderCityData}
-            >
-              Display city informations
-            </button>
-          </div>
-        </li>
+        {this.renderCityItem()}
         {cityProperties && cityProperties.length > 0 && (
           <DialogCityInfo
             isOpenDialog={this.state.isOpenDialog}

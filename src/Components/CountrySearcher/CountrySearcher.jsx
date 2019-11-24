@@ -125,6 +125,27 @@ class CountrySearcher extends Component {
       : null;
   };
 
+  renderSearcherTitle = () => (
+    <label className={styles.inputTitle} form="name">
+      Please write some country:
+    </label>
+  );
+
+  renderSearcherInput = () => {
+    const { value } = this.state;
+    return (
+      <input
+        autoComplete="off"
+        className={styles.input}
+        placeholder="Search..."
+        id="name"
+        type="text"
+        value={value}
+        onChange={this.handleChangeInput}
+      />
+    );
+  };
+
   render() {
     const { value, isOpenAlert } = this.state;
     const { countriesList } = this.props;
@@ -140,19 +161,8 @@ class CountrySearcher extends Component {
         style={{ textAlign: "center" }}
       >
         <div className={styles.container}>
-          <label className={styles.inputTitle} form="name">
-            Please write some country:
-          </label>
-          <input
-            autoComplete="off"
-            className={styles.input}
-            placeholder="Search..."
-            id="name"
-            type="text"
-            value={value}
-            onChange={this.handleChangeInput}
-          ></input>
-
+          {this.renderSearcherTitle()}
+          {this.renderSearcherInput()}
           {value && value.length > 0 && this.renderAutoCompleteSection()}
           <DialogAlert
             isOpenAlert={isOpenAlert}
@@ -173,8 +183,6 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => ({
   citiesList: state.citiesList,
-  country: state.country,
-  countriesList: state.countriesList,
-  city: state.city
+  countriesList: state.countriesList
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CountrySearcher);
