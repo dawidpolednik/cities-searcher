@@ -10,6 +10,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  box-sizing: border-box;
+  font-family: "Roboto Slab", serif;
+}
+
 body {
   box-sizing: border-box;
   margin: 0;
