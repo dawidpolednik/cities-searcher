@@ -75,6 +75,7 @@
   .container {
     .inputTitle {
       font-size: 1.5rem;
+      padding-bottom: 0 10px 20px 10px;
     }
 
     .input {
@@ -102,7 +103,8 @@
 @media screen and (max-width: 414px) and (min-width: 321px) and (max-aspect-ratio: 13/9) {
   .container {
     .inputTitle {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
+      padding-bottom: 0 20px 20px 20px;
     }
 
     .input {
