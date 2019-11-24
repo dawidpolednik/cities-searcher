@@ -20,7 +20,6 @@ class CitiesList extends Component {
           animatePreScroll
           style={{
             width: "100%",
-
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
