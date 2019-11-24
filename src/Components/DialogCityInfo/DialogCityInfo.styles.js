@@ -1,7 +1,6 @@
 const style = theme => ({
   dialog: {
     textAlign: "center"
-    // overflowY: "scroll"
   },
   dialogTitle: {
     textAlign: "center",
