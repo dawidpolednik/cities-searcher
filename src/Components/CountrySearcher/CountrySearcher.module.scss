@@ -32,6 +32,9 @@
       color: #eee;
       opacity: 0.6;
     }
+    &:focus::placeholder {
+      color: transparent;
+    }
   }
   .autoCompleteContainer {
     width: 40%;

@@ -30,17 +30,14 @@ class CountrySearcher extends Component {
 
   convertToTwoLetters = value => {
     const { countriesList } = this.props;
+    let newName = "";
+    const countryAbbr = ["PL", "DE", "ES", "FR"];
+    countriesList
+      .map(countryName => countryName.toLowerCase())
+      .some((countryName, index) =>
+        countryName === value ? (newName = countryAbbr[index]) : null
+      );
 
-    let newName;
-    if (value === countriesList[0].toLowerCase()) {
-      newName = "PL";
-    } else if (value === countriesList[1].toLowerCase()) {
-      newName = "DE";
-    } else if (value === countriesList[2].toLowerCase()) {
-      newName = "ES";
-    } else if (value === countriesList[3].toLowerCase()) {
-      newName = "FR";
-    }
     return newName;
   };
 

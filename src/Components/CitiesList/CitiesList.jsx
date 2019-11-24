@@ -35,13 +35,7 @@ class CitiesList extends Component {
           delay={0}
           animateOnce
           animatePreScroll
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: 0
-          }}
+          className={styles.animation}
         >
           {this.renderCityList()}
         </ScrollAnimation>

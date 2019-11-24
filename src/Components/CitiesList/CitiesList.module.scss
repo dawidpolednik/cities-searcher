@@ -1,5 +1,13 @@
 @import "../../assets/fonts.scss";
 
+.animation {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
 .listTitle {
   font-size: 1.8rem;
   color: #eee;
