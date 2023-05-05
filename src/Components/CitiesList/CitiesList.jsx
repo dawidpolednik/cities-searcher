@@ -20,7 +20,7 @@ class CitiesList extends Component {
     return (
       <h2
         className={styles.listTitle}
-      >{`List of the 10 most polluted cities in ${country}`}</h2>
+      >`List of the 10 most polluted cities in ${country}`</h2>
     );
   };
 
