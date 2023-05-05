@@ -2,6 +2,10 @@
   "name": "cities-searcher",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
   "dependencies": {
     "@material-ui/core": "^4.7.0",
     "lodash": "^4.17.15",
